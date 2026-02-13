@@ -188,17 +188,17 @@
 </script>
 
 <!-- Confetti explosion on page load -->
+<!-- Confetti explosion on page load – longer visible burst -->
 <canvas id="confettiCanvas" style="position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99999; background: transparent;"></canvas>
 
 <script>
-// Improved, reliable short colorful confetti
+// Adjusted confetti: slower fall, gentler fade, longer visible time (~4-6s)
 function launchConfetti() {
     const canvas = document.getElementById('confettiCanvas');
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
 
-    // Force resize immediately and on events
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -211,20 +211,20 @@ function launchConfetti() {
     const colors = [
         '#ff6b6b', '#4ecdc4', '#45b7d1', '#96c93d', '#feca57',
         '#ff9ff3', '#54a0ff', '#5f27cd', '#ff5252', '#33d9b2',
-        '#ffffff', '#ffeb3b'
+        '#ffffff', '#ffeb3b', '#d81b60', '#1976d2'
     ];
 
-    for (let i = 0; i < 120; i++) {
-        const size = Math.random() * 6 + 3; // small
+    for (let i = 0; i < 140; i++) {  // moderate count for visibility
+        const size = Math.random() * 7 + 4;  // small-medium pieces
         particles.push({
             x: Math.random() * canvas.width,
-            y: Math.random() * -canvas.height,
-            vx: Math.random() * 8 - 4,
-            vy: Math.random() * 6 + 3,
+            y: Math.random() * -canvas.height * 0.6 - 100,
+            vx: Math.random() * 6 - 3,
+            vy: Math.random() * 4 + 2,  // slower initial downward speed
             size: size,
             color: colors[Math.floor(Math.random() * colors.length)],
             rotation: Math.random() * 360,
-            rotSpeed: Math.random() * 8 - 4,
+            rotSpeed: Math.random() * 4 - 2,  // gentler spin
             alpha: 1
         });
     }
@@ -236,11 +236,11 @@ function launchConfetti() {
         particles.forEach((p, i) => {
             p.x += p.vx;
             p.y += p.vy;
-            p.vy += 0.18; // gravity
+            p.vy += 0.08;          // very light gravity → slower fall
             p.rotation += p.rotSpeed;
-            p.alpha -= 0.015; // quick fade
+            p.alpha -= 0.004;      // very slow fade → lasts longer
 
-            if (p.alpha <= 0 || p.y > canvas.height + 100) {
+            if (p.alpha <= 0 || p.y > canvas.height + 150) {
                 particles.splice(i, 1);
                 return;
             }
@@ -250,7 +250,7 @@ function launchConfetti() {
             ctx.translate(p.x, p.y);
             ctx.rotate(p.rotation * Math.PI / 180);
             ctx.fillStyle = p.color;
-            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 1.4); // slight rectangle shape
             ctx.restore();
         });
 
@@ -265,8 +265,9 @@ function launchConfetti() {
     animate();
 }
 
-// Start after a tiny delay (helps mobile render issues)
-setTimeout(launchConfetti, 500);
+// Slight delay to ensure page is painted (helps mobile)
+setTimeout(launchConfetti, 800);
+</script>
 </script>
 </script>
 </script>
