@@ -193,5 +193,75 @@
         }
     });
 </script>
+    <!-- Confetti explosion on page load -->
+<canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+
+<script>
+// Simple confetti function - fires once on load
+function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Confetti pieces
+    const confetti = [];
+    const colors = ['#d81b60', '#1976d2', '#ffffff', '#ffeb3b', '#4caf50', '#e91e63']; // romantic mix: pink, blue, white, yellow, green
+
+    for (let i = 0; i < 200; i++) { // number of pieces
+        confetti.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            r: Math.random() * 6 + 3, // size
+            d: Math.random() * 200 + 50, // rotation speed
+            color: colors[Math.floor(Math.random() * colors.length)],
+            tilt: Math.random() * 10 - 10,
+            tiltAngle: 0
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        confetti.forEach((c, i) => {
+            c.tiltAngle += 0.1;
+            c.y += (Math.cos(c.d) + 3 + c.r / 2) / 2;
+            c.tiltAngleIncrement = Math.sin(c.d) * 0.5;
+            c.tilt += c.tiltAngleIncrement;
+
+            // Remove if off screen
+            if (c.y > canvas.height) {
+                confetti.splice(i, 1);
+                return;
+            }
+
+            ctx.beginPath();
+            ctx.lineWidth = c.r;
+            ctx.strokeStyle = c.color;
+            ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
+            ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
+            ctx.stroke();
+        });
+
+        // Stop when all gone
+        if (confetti.length > 0) {
+            requestAnimationFrame(draw);
+        } else {
+            canvas.remove(); // clean up canvas after animation
+        }
+    }
+
+    draw();
+
+    // Resize handling (if window changes)
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Trigger confetti as soon as page loads
+window.addEventListener('load', launchConfetti);
+</script>
 </body>
 </html>
