@@ -2,61 +2,98 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAUD ❤️</title>
     <style>
         body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            margin-top: 100px;
-            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #ffebee 0%, #e1f5fe 50%, #f3e5f5 100%);
+            color: #333;
         }
         .box {
-            background: sea blue;
-            padding: 40px;
-            border-radius: 10px;
-            width: 60%;
-            max-width: 600px;
-            margin: auto;
-            box-shadow: 0 0 15px rgba(0,0,0,0.12);
-        }
-        button {
-            padding: 14px 32px;
-            font-size: 20px;
-            margin-top: 30px;
-            cursor: pointer;
-            background: #000;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #222;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 50px 30px;
+            border-radius: 24px;
+            width: 85%;
+            max-width: 620px;
+            box-shadow: 0 15px 40px rgba(216, 27, 96, 0.18);
+            text-align: center;
+            backdrop-filter: blur(8px); /* nice modern blur effect */
         }
         h1 {
-            color: #c2185b;          /* nice light blue for romantic feel */
+            color: #d81b60;
+            font-size: 3em;
+            margin: 0 0 20px;
+            animation: gentlePulse 3s ease-in-out infinite;
+        }
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+        p.intro {
+            font-size: 1.4em;
+            color: #555;
+            line-height: 1.6;
+            margin: 0 0 40px;
+        }
+        .crown {
+            font-size: 4em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        button {
+            padding: 16px 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            background: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.3);
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #c2185b;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(216, 27, 96, 0.45);
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 0.95em;
+            color: #777;
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 2.4em; }
+            button { padding: 14px 40px; font-size: 1.3em; }
+            .box { padding: 40px 20px; }
         }
     </style>
 </head>
 <body>
 
 <div class="box">
-    <h1>HELLO PRINCESS MAUD 👑❤️</h1>
-    <p>You are the best!.</p>
-    
-    <!-- This is the important change -->
-   <!-- Replace your current button with this -->
-<a href="maud.html?play=1"><button>Enter My World →</button></a>
-    
-    <p style="margin-top:40px; font-size:0.9em; color:#666;">
-        Made with ❤️ from David
+    <span class="crown">👑</span>
+    <h1>Hello Princess Maud ❤️</h1>
+    <p class="intro">
+        Are you ready to step into little world I created for you?.<br>
+        <br><br>
+    </p>
+
+    <a href="maud.html?play=1">
+        <button>Enter My World →</button>
+    </a>
+
+    <p class="footer">
+        Made with ❤️ from David 
     </p>
 </div>
 
 </body>
 </html>
-</script>
-
-</body>
-</html>
-
