@@ -122,7 +122,7 @@
     <div class="box">
         <h2>Lemme use this chance to tell you that I will never leave you</h2>
         <ul style="list-style: none; padding: 0; font-size: 1.25em; max-width: 600px; margin: 30px auto; text-align: center;">
-            <li> You are simply the best!!!and I Love You very much 💕</li>
+            <li> You are simply the best!!! and I Love You very much 💕</li>
         </ul>
         <video autoplay loop muted playsinline>
             <source src="maud, birthday vid.mp4" type="video/mp4">
@@ -144,40 +144,53 @@
     </p>
 
 </div>
-<!-- Romantic background music -->
-<audio id="bgMusic" loop autoplay muted playsinline>
+<!-- Romantic background music – starts on button click from page 1 -->
+<audio id="bgMusic" loop playsinline>
     <source src="audio.m4a" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
 
-<!-- Small button to unmute (very visible & cute) -->
-<button id="unmuteBtn" 
+<!-- Optional: small unmute / control button (floating bottom-right) -->
+<button id="musicToggle" 
         style="position: fixed; bottom: 20px; right: 20px; 
                padding: 12px 20px; background: #d81b60; color: white; 
                border: none; border-radius: 50px; font-size: 16px; 
                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-               z-index: 999;">
-    🔇 Tap to hear sound ♡
+               z-index: 999; display: none;">
+    🔊 Music ♡
 </button>
 
 <script>
     const audio = document.getElementById('bgMusic');
-    const btn = document.getElementById('unmuteBtn');
+    const toggleBtn = document.getElementById('musicToggle');
 
-    // Try to unmute when user interacts with page (click anywhere)
-    document.body.addEventListener('click', function() {
-        if (audio.muted) {
-            audio.muted = false;
-            btn.innerHTML = '🔊 Music playing ♡';
-            // Optional: hide button after unmute
-            // btn.style.display = 'none';
+    // Check if we came from the "Enter My World" button
+    const urlParams = new URLSearchParams(window.location.search);
+    const shouldPlay = urlParams.get('play') === '1';
+
+    if (shouldPlay) {
+        // Try to play (browsers allow this after navigation from click)
+        audio.play().then(() => {
+            console.log("Music started!");
+            toggleBtn.style.display = 'block';  // show control button
+            toggleBtn.innerHTML = '🔊 Playing ♡';
+        }).catch(error => {
+            console.log("Autoplay blocked – waiting for user tap");
+            // Show button so user can start it manually
+            toggleBtn.style.display = 'block';
+            toggleBtn.innerHTML = '▶️ Tap for music ♡';
+        });
+    }
+
+    // Button to toggle play/pause (and unmute if needed)
+    toggleBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            toggleBtn.innerHTML = '🔊 Playing ♡';
+        } else {
+            audio.pause();
+            toggleBtn.innerHTML = '⏸️ Paused';
         }
-    }, { once: true });  // only run once
-
-    // Button click also unmutes
-    btn.addEventListener('click', function() {
-        audio.muted = !audio.muted;
-        btn.innerHTML = audio.muted ? '🔇 Tap to hear music ♡' : '🔊 Music playing ♡';
     });
 </script>
 </body>
