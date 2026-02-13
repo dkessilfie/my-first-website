@@ -192,60 +192,80 @@
 
 <script>
 // Simple confetti function - fires once on load
+<script>
+// Improved short colorful confetti – rectangles, rotation, quick burst
 function launchConfetti() {
     const canvas = document.getElementById('confettiCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    // Confetti pieces
-    const confetti = [];
-    const colors = ['#0d47a1', '#1565c0', '#1976d2', '#2196f3', '#64b5f6', '#bbdefb', '#ffffff']; // all blue shades + white
-    for (let i = 0; i < 200; i++) { // number of pieces
-        confetti.push({
+
+    const particles = [];
+    const colors = [
+        '#ff6b6b', '#4ecdc4', '#45b7d1', '#96c93d', '#feca57',
+        '#ff9ff3', '#54a0ff', '#5f27cd', '#ff5252', '#33d9b2'
+    ]; // bright, fun mix
+
+    for (let i = 0; i < 100; i++) { // fewer = faster end
+        const size = Math.random() * 8 + 4; // small rectangles
+        particles.push({
             x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height - canvas.height,
-            r: Math.random() * 6 + 3, // size
-            d: Math.random() * 200 + 50, // rotation speed
+            y: Math.random() * canvas.height * -0.5 - 50, // start above screen
+            vx: Math.random() * 10 - 5,
+            vy: Math.random() * 8 + 4,
+            size: size,
+            width: size * (Math.random() * 0.6 + 0.6),
+            height: size * (Math.random() * 0.6 + 0.6),
             color: colors[Math.floor(Math.random() * colors.length)],
-            tilt: Math.random() * 10 - 10,
-            tiltAngle: 0
+            rotation: Math.random() * 360,
+            rotSpeed: Math.random() * 10 - 5,
+            alpha: 1
         });
     }
-    function draw() {
+
+    function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        confetti.forEach((c, i) => {
-            c.tiltAngle += 0.1;
-            c.y += (Math.cos(c.d) + 3 + c.r / 2) / 2;
-            c.tiltAngleIncrement = Math.sin(c.d) * 0.5;
-            c.tilt += c.tiltAngleIncrement;
-            // Remove if off screen
-            if (c.y > canvas.height) {
-                confetti.splice(i, 1);
+
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.15; // gravity
+            p.vx *= 0.99; // slight drag
+            p.rotation += p.rotSpeed;
+            p.alpha -= 0.008; // fade out quickly
+
+            if (p.alpha <= 0 || p.y > canvas.height + 50) {
+                particles.splice(i, 1);
                 return;
             }
-            ctx.beginPath();
-            ctx.lineWidth = c.r;
-            ctx.strokeStyle = c.color;
-            ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
-            ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
-            ctx.stroke();
+
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation * Math.PI / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.width/2, -p.height/2, p.width, p.height);
+            ctx.restore();
         });
-        // Stop when all gone
-        if (confetti.length > 0) {
-            requestAnimationFrame(draw);
+
+        if (particles.length > 0) {
+            requestAnimationFrame(animate);
         } else {
-            canvas.remove(); // clean up canvas after animation
+            canvas.remove(); // clean up
         }
     }
-    draw();
-    // Resize handling (if window changes)
+
+    animate();
+
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
 }
-// Trigger confetti as soon as page loads
+
+// Trigger immediately on page load
 window.addEventListener('load', launchConfetti);
+</script>
 </script>
 </body>
 </html>
