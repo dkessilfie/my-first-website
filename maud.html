@@ -10,8 +10,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ffebee, #fce4ec, #f8bbd0);
-            color: #333;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb, #90caf9); /* blue romantic gradient */
+            color: #0d47a1; /* deep blue text */
             line-height: 1.7;
         }
         .container {
@@ -24,53 +24,58 @@
             padding: 50px 30px;
             border-radius: 20px;
             margin: 40px 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 40px rgba(13, 71, 161, 0.18); /* blue shadow */
+            border: 1px solid rgba(33, 150, 243, 0.15);
         }
         h1, h2 {
-            color: #d81b60;
+            color: #1565c0; /* medium blue */
             margin-bottom: 10px;
         }
         .heart {
             font-size: 3.8em;
             margin: 20px 0;
             display: block;
+            color: #1976d2; /* blue heart */
         }
         img {
             max-width: 100%;
             height: auto;
             border-radius: 16px;
             margin: 25px 0;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(13, 71, 161, 0.2);
         }
         video {
             max-width: 100%;
             border-radius: 16px;
             margin: 25px 0;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(13, 71, 161, 0.2);
         }
         .message {
             font-size: 1.25em;
             margin: 30px 0;
+            color: #0d47a1;
         }
         .small {
             font-size: 0.95em;
-            color: #555;
+            color: #666;
             margin-top: 80px;
         }
         a {
-            color: #c2185b;
+            color: #1976d2;
             text-decoration: none;
             font-weight: bold;
         }
         a:hover {
             text-decoration: underline;
+            color: #0d47a1;
+        }
+        ul li {
+            color: #1565c0;
         }
     </style>
 </head>
 <body>
-
 <div class="container">
-
     <div class="box">
         <h1 class="heart">💙</h1>
         <h1>Hi Pretty Maud 👑</h1>
@@ -79,19 +84,18 @@
             <strong>This is the least I can do because money no dey 🤣🤣🤣</strong>
         </p>
         <img src="coins.jpg" alt="Palm with coins">
-        
+       
         <p class="message">
             But I know one day when I get money like this 😂...<br>
-            
         </p>
         <video autoplay loop muted playsinline>
             <source src="plenty money.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <p class="message">
             I will buy you a car, that's one of my dreams 🤞🤞.<br>
-
-        </video>
+        </p>
     </div>
-
     <div class="box">
         <h2>a little throwback 😁...</h2>
         <video autoplay loop muted playsinline>
@@ -99,7 +103,6 @@
             Your browser does not support the video tag.
         </video>
     </div>
-
     <div class="box">
         <h2> one of our first videos together.</h2>
         <video autoplay loop muted playsinline>
@@ -107,18 +110,13 @@
             Your browser does not support the video tag.
         </video>
     </div>
-
     <div class="box">
         <h2>😂😂😂</h2>
-         <img src="bald.jpg" alt="bald">
-           
-    
-        </video>
+        <img src="bald.jpg" alt="bald">
         <p style="margin-top: 20px; font-style: italic;">
             more fun moments ahead
         </p>
     </div>
-
     <div class="box">
         <h2>Lemme use this chance to tell you that I will never leave you</h2>
         <ul style="list-style: none; padding: 0; font-size: 1.25em; max-width: 600px; margin: 30px auto; text-align: center;">
@@ -129,7 +127,6 @@
             Your browser does not support the video tag.
         </video>
     </div>
-
     <div class="box">
         <h2>To a better and bright future</h2>
         <img src="restaurant.jpg" alt="Man and woman at restaurant">
@@ -138,24 +135,23 @@
             "Happy Vals Day, Dr 😘"
         </p>
     </div>
-
     <p class="small">
          <a href="index.html">Go back to hello</a> • Made with all my love (not AI 🤣) • 14th February 2026 ❤️
     </p>
-
 </div>
+
 <!-- Romantic background music – starts on button click from page 1 -->
 <audio id="bgMusic" loop playsinline>
-    <source src="audio.m4a" type="audio/mpeg">
+    <source src="audio.m4a" type="audio/mp4"> <!-- Changed type to match .m4a (common for audio) -->
     Your browser does not support the audio element.
 </audio>
 
 <!-- Optional: small unmute / control button (floating bottom-right) -->
-<button id="musicToggle" 
-        style="position: fixed; bottom: 20px; right: 20px; 
-               padding: 12px 20px; background: #d81b60; color: white; 
-               border: none; border-radius: 50px; font-size: 16px; 
-               cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+<button id="musicToggle"
+        style="position: fixed; bottom: 20px; right: 20px;
+               padding: 12px 20px; background: #1976d2; color: white;
+               border: none; border-radius: 50px; font-size: 16px;
+               cursor: pointer; box-shadow: 0 4px 15px rgba(13,71,161,0.3);
                z-index: 999; display: none;">
     🔊 Music ♡
 </button>
@@ -163,16 +159,14 @@
 <script>
     const audio = document.getElementById('bgMusic');
     const toggleBtn = document.getElementById('musicToggle');
-
     // Check if we came from the "Enter My World" button
     const urlParams = new URLSearchParams(window.location.search);
     const shouldPlay = urlParams.get('play') === '1';
-
     if (shouldPlay) {
         // Try to play (browsers allow this after navigation from click)
         audio.play().then(() => {
             console.log("Music started!");
-            toggleBtn.style.display = 'block';  // show control button
+            toggleBtn.style.display = 'block'; // show control button
             toggleBtn.innerHTML = '🔊 Playing ♡';
         }).catch(error => {
             console.log("Autoplay blocked – waiting for user tap");
@@ -181,7 +175,6 @@
             toggleBtn.innerHTML = '▶️ Tap for music ♡';
         });
     }
-
     // Button to toggle play/pause (and unmute if needed)
     toggleBtn.addEventListener('click', () => {
         if (audio.paused) {
@@ -193,7 +186,8 @@
         }
     });
 </script>
-    <!-- Confetti explosion on page load -->
+
+<!-- Confetti explosion on page load -->
 <canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
 
 <script>
@@ -203,11 +197,9 @@ function launchConfetti() {
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     // Confetti pieces
     const confetti = [];
-    const colors = ['#d81b60', '#1976d2', '#ffffff', '#ffeb3b', '#4caf50', '#e91e63']; // romantic mix: pink, blue, white, yellow, green
-
+    const colors = ['#0d47a1', '#1565c0', '#1976d2', '#2196f3', '#64b5f6', '#bbdefb', '#ffffff']; // all blue shades + white
     for (let i = 0; i < 200; i++) { // number of pieces
         confetti.push({
             x: Math.random() * canvas.width,
@@ -219,22 +211,18 @@ function launchConfetti() {
             tiltAngle: 0
         });
     }
-
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         confetti.forEach((c, i) => {
             c.tiltAngle += 0.1;
             c.y += (Math.cos(c.d) + 3 + c.r / 2) / 2;
             c.tiltAngleIncrement = Math.sin(c.d) * 0.5;
             c.tilt += c.tiltAngleIncrement;
-
             // Remove if off screen
             if (c.y > canvas.height) {
                 confetti.splice(i, 1);
                 return;
             }
-
             ctx.beginPath();
             ctx.lineWidth = c.r;
             ctx.strokeStyle = c.color;
@@ -242,7 +230,6 @@ function launchConfetti() {
             ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
             ctx.stroke();
         });
-
         // Stop when all gone
         if (confetti.length > 0) {
             requestAnimationFrame(draw);
@@ -250,16 +237,13 @@ function launchConfetti() {
             canvas.remove(); // clean up canvas after animation
         }
     }
-
     draw();
-
     // Resize handling (if window changes)
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
 }
-
 // Trigger confetti as soon as page loads
 window.addEventListener('load', launchConfetti);
 </script>
