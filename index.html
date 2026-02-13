@@ -1,58 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>MAUD❤️</title>
-
-<style>
-body{
-text-align:center;
-font-family:Arial;
-margin-top:100px;
-background-color:#f2f2f2;
-}
-
-.box{
-background:white;
-padding:40px;
-border-radius:10px;
-width:60%;
-margin:auto;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-button{
-padding:12px 20px;
-font-size:18px;
-margin-top:20px;
-cursor:pointer;
-background:black;
-color:white;
-border:none;
-border-radius:5px;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <title>MAUD ❤️</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 100px;
+            background-color: #f2f2f2;
+        }
+        .box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            width: 60%;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.12);
+        }
+        button {
+            padding: 14px 32px;
+            font-size: 20px;
+            margin-top: 30px;
+            cursor: pointer;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #222;
+        }
+        h1 {
+            color: #c2185b;          /* nice blueish-red for romantic feel */
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="box">
-
-<h1>HELLO PRINCESS MAUD 👋</h1>
-
-<p>You are now officially a website owner.</p>
-
-<button onclick="showMessage()">Click Here</button>
-
-<p id="message" style="font-weight:bold;"></p>
-
+    <h1>HELLO PRINCESS MAUD 👑❤️</h1>
+    <p>You are the best!.</p>
+    
+    <!-- This is the important change -->
+    <a href="maud.html"><button>Enter My World →</button></a>
+    
+    <p style="margin-top:40px; font-size:0.9em; color:#666;">
+        Made with ❤️ from David
+    </p>
 </div>
 
-<script>
-function showMessage(){
-document.getElementById("message").innerHTML =
-"This website is LIVE on the internet 🚀";
-}
+</body>
+</html>
 </script>
 
 </body>
