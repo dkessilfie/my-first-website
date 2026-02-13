@@ -144,6 +144,41 @@
     </p>
 
 </div>
+<!-- Romantic background music -->
+<audio id="bgMusic" loop autoplay muted playsinline>
+    <source src="romantic-background.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 
+<!-- Small button to unmute (very visible & cute) -->
+<button id="unmuteBtn" 
+        style="position: fixed; bottom: 20px; right: 20px; 
+               padding: 12px 20px; background: #d81b60; color: white; 
+               border: none; border-radius: 50px; font-size: 16px; 
+               cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+               z-index: 999;">
+    🔇 Tap to hear music ♡
+</button>
+
+<script>
+    const audio = document.getElementById('bgMusic');
+    const btn = document.getElementById('unmuteBtn');
+
+    // Try to unmute when user interacts with page (click anywhere)
+    document.body.addEventListener('click', function() {
+        if (audio.muted) {
+            audio.muted = false;
+            btn.innerHTML = '🔊 Music playing ♡';
+            // Optional: hide button after unmute
+            // btn.style.display = 'none';
+        }
+    }, { once: true });  // only run once
+
+    // Button click also unmutes
+    btn.addEventListener('click', function() {
+        audio.muted = !audio.muted;
+        btn.innerHTML = audio.muted ? '🔇 Tap to hear music ♡' : '🔊 Music playing ♡';
+    });
+</script>
 </body>
 </html>
