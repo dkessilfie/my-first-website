@@ -188,53 +188,59 @@
 </script>
 
 <!-- Confetti explosion on page load -->
-<canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+<canvas id="confettiCanvas" style="position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99999; background: transparent;"></canvas>
 
 <script>
-// Simple confetti function - fires once on load
-<script>
-// Improved short colorful confetti – rectangles, rotation, quick burst
+// Improved, reliable short colorful confetti
 function launchConfetti() {
     const canvas = document.getElementById('confettiCanvas');
+    if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+
+    // Force resize immediately and on events
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('orientationchange', resizeCanvas);
 
     const particles = [];
     const colors = [
         '#ff6b6b', '#4ecdc4', '#45b7d1', '#96c93d', '#feca57',
-        '#ff9ff3', '#54a0ff', '#5f27cd', '#ff5252', '#33d9b2'
-    ]; // bright, fun mix
+        '#ff9ff3', '#54a0ff', '#5f27cd', '#ff5252', '#33d9b2',
+        '#ffffff', '#ffeb3b'
+    ];
 
-    for (let i = 0; i < 100; i++) { // fewer = faster end
-        const size = Math.random() * 8 + 4; // small rectangles
+    for (let i = 0; i < 120; i++) {
+        const size = Math.random() * 6 + 3; // small
         particles.push({
             x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height * -0.5 - 50, // start above screen
-            vx: Math.random() * 10 - 5,
-            vy: Math.random() * 8 + 4,
+            y: Math.random() * -canvas.height,
+            vx: Math.random() * 8 - 4,
+            vy: Math.random() * 6 + 3,
             size: size,
-            width: size * (Math.random() * 0.6 + 0.6),
-            height: size * (Math.random() * 0.6 + 0.6),
             color: colors[Math.floor(Math.random() * colors.length)],
             rotation: Math.random() * 360,
-            rotSpeed: Math.random() * 10 - 5,
+            rotSpeed: Math.random() * 8 - 4,
             alpha: 1
         });
     }
 
+    let animationId;
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         particles.forEach((p, i) => {
             p.x += p.vx;
             p.y += p.vy;
-            p.vy += 0.15; // gravity
-            p.vx *= 0.99; // slight drag
+            p.vy += 0.18; // gravity
             p.rotation += p.rotSpeed;
-            p.alpha -= 0.008; // fade out quickly
+            p.alpha -= 0.015; // quick fade
 
-            if (p.alpha <= 0 || p.y > canvas.height + 50) {
+            if (p.alpha <= 0 || p.y > canvas.height + 100) {
                 particles.splice(i, 1);
                 return;
             }
@@ -244,27 +250,24 @@ function launchConfetti() {
             ctx.translate(p.x, p.y);
             ctx.rotate(p.rotation * Math.PI / 180);
             ctx.fillStyle = p.color;
-            ctx.fillRect(-p.width/2, -p.height/2, p.width, p.height);
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
             ctx.restore();
         });
 
         if (particles.length > 0) {
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
         } else {
-            canvas.remove(); // clean up
+            cancelAnimationFrame(animationId);
+            canvas.remove(); // cleanup
         }
     }
 
     animate();
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
 }
 
-// Trigger immediately on page load
-window.addEventListener('load', launchConfetti);
+// Start after a tiny delay (helps mobile render issues)
+setTimeout(launchConfetti, 500);
+</script>
 </script>
 </script>
 </body>
